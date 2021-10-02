@@ -57,17 +57,63 @@ int	ft_init_arg(t_philo *philo, int argc, char **argv)
 	return (0);
 }
 
-void	ft_init_persons(t_philo *philo)
+int	ft_malloc_philo(t_philo *philo)
+{
+	philo->persons = malloc(sizeof(t_person) * philo->number_of_philo);
+	if (!philo->persons)
+		return (1);
+	philo->forks = malloc(sizeof(pthread_mutex_t) * philo->number_of_philo);
+	if (!philo->forks)
+	{
+		free(philo->persons);
+		return (1);
+	}
+	return (0);
+}
+
+int	ft_init_persons(t_philo *philo)
 {
 	int	i;
 
 	i = 0;
+	if (pthread_mutex_init(&philo->table, NULL))
+		return (1);
+	if (pthread_mutex_init(&philo->print, NULL))
+		return (1);
 	while (i < philo->number_of_philo)
 	{
 		philo->persons[i].i = i;
+		philo->persons[i].times_eats = 0;
 		philo->persons[i].left = i;
-		philo->persons[i].right = i % 2;
-		pthread_mutex_init(&philo->forks[i], NULL);
+		if (i + 1 < philo->number_of_philo)
+			philo->persons[i].right = i + 1;
+		else
+			philo->persons[i].right = 0;
+		if (pthread_mutex_init(&philo->forks[i], NULL))
+			return (1);
 		i++;
+	}
+	return (0);
+}
+
+void	ft_free_all(t_philo *philo)
+{
+	int	i;
+
+	i = 0;
+	if (philo->persons)
+	{
+		pthread_mutex_destroy(&philo->table);
+		pthread_mutex_destroy(&philo->print);
+		free(philo->persons);
+	}
+	if (philo->forks)
+	{
+		while (i < philo->number_of_philo)
+		{
+			pthread_mutex_destroy(&philo->forks[i]);
+			i++;
+		}
+		free(philo->forks);
 	}
 }
