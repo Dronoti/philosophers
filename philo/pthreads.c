@@ -31,12 +31,10 @@ void	ft_wait(int wait)
 
 void	ft_eat(t_person *person, t_philo *philo)
 {
-	pthread_mutex_lock(&philo->table);
 	pthread_mutex_lock(&philo->forks[person->left]);
 	ft_print(philo, person->i + 1, "has taken a left fork");
 	pthread_mutex_lock(&philo->forks[person->right]);
 	ft_print(philo, person->i + 1, "has taken a right fork");
-	pthread_mutex_unlock(&philo->table);
 	person->timer = ft_get_time();
 	ft_print(philo, person->i + 1, "is eating");
 	person->times_eats++;

@@ -39,7 +39,6 @@ typedef struct s_philo
 	int				start;
 	t_person		*persons;
 	pthread_mutex_t	*forks;
-	pthread_mutex_t	table;
 	pthread_mutex_t	print;
 }				t_philo;
 

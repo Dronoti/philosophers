@@ -76,8 +76,6 @@ int	ft_init_persons(t_philo *philo)
 	int	i;
 
 	i = 0;
-	if (pthread_mutex_init(&philo->table, NULL))
-		return (1);
 	if (pthread_mutex_init(&philo->print, NULL))
 		return (1);
 	while (i < philo->number_of_philo)
@@ -102,11 +100,7 @@ void	ft_free_all(t_philo *philo)
 
 	i = 0;
 	if (philo->persons)
-	{
-		pthread_mutex_destroy(&philo->table);
-		pthread_mutex_destroy(&philo->print);
 		free(philo->persons);
-	}
 	if (philo->forks)
 	{
 		while (i < philo->number_of_philo)
@@ -114,6 +108,7 @@ void	ft_free_all(t_philo *philo)
 			pthread_mutex_destroy(&philo->forks[i]);
 			i++;
 		}
+		pthread_mutex_destroy(&philo->print);
 		free(philo->forks);
 	}
 }

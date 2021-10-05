@@ -17,7 +17,7 @@ int	ft_all_detach(t_philo *philo)
 	int	i;
 
 	i = 0;
-	while(i < philo->number_of_philo)
+	while (i < philo->number_of_philo)
 	{
 		if (pthread_detach(philo->persons[i].thread))
 			return (1);
@@ -48,7 +48,6 @@ void	ft_monitor(t_philo *philo, int i, int eat)
 				ft_putendl_fd("Stop: All the philosophers ate", 1);
 				return ;
 			}
-			usleep(100);
 		}
 	}
 }
