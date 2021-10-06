@@ -51,8 +51,8 @@ int	ft_init_arg(t_philo *philo, int argc, char **argv)
 		philo->number_of_eats = 0;
 	if (argc == 6 && philo->number_of_eats < 1)
 		return (1);
-	if (philo->number_of_philo < 1 || philo->die < 60 || philo->sleep < 60
-		|| philo->eat < 60 || philo->number_of_philo > 200)
+	if (philo->number_of_philo < 1 || philo->die < 1 || philo->sleep < 1
+		|| philo->eat < 1 || philo->number_of_philo > 200)
 		return (1);
 	return (0);
 }
